@@ -1,0 +1,50 @@
+name: Build glasses APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'android/**'
+      - '.github/workflows/build-apk.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug
+
+      - name: Rename APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk RokidClaude-vi.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RokidClaude-vi-apk
+          path: RokidClaude-vi.apk
+
+      - name: Publish release (downloadable from phone)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.2.${{ github.run_number }}
+          name: Rokid Claude VI v0.2.${{ github.run_number }}
+          make_latest: true
+          body: |
+            Bản app cho kính Rokid Glasses (có quét mã QR, kết nối từ xa).
+            Cài: gỡ app Rokid Claude cũ trên kính trước, rồi cài RokidClaude-vi.apk qua mục cài APK trong app quản lý Rokid.
+          files: RokidClaude-vi.apk

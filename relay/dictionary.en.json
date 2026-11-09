@@ -1,0 +1,9 @@
+{
+  "usage": "/cost",
+  "how much": "/cost",
+  "review code": "Review my recent changes; point out bugs and anything that can be simplified.",
+  "commit": "Commit the current changes with a clear message.",
+  "run tests": "Run the test suite and report the result.",
+  "continue": "Continue.",
+  "explain": "Explain what you just did."
+}

@@ -1,0 +1,51 @@
+:root { --green: #00ff66; --scale: 1.4; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #111; color: #ccc; font-family: ui-monospace, Menlo, monospace; }
+
+.toolbar { display: flex; gap: 8px; align-items: center; padding: 10px; flex-wrap: wrap; }
+.toolbar input[type=text] { flex: 1; min-width: 240px; padding: 6px 8px; background: #000; color: var(--green); border: 1px solid #333; }
+.toolbar button { padding: 6px 12px; background: #222; color: #ddd; border: 1px solid #444; cursor: pointer; }
+.toolbar label { font-size: 12px; color: #999; }
+.usage { font-size: 12px; color: var(--green); margin-left: auto; opacity: .85; }
+.usage + .conn { margin-left: 12px; }
+.conn { font-size: 12px; color: #888; }
+
+.stage { display: flex; justify-content: center; align-items: center; min-height: 940px; padding: 20px 0; }
+
+/* 真机 480x640,黑底=不发光 */
+.panel {
+  position: relative;
+  width: 480px; height: 640px;
+  background: #000;
+  color: var(--green);
+  transform: scale(var(--scale));
+  transform-origin: center center;
+  overflow: hidden;
+  font-size: 20px; line-height: 1.35;
+  text-shadow: 0 0 2px var(--green); /* 轻辉光,模拟 micro-LED */
+}
+.panel.rot { transform: scale(var(--scale)) rotate(90deg); }
+
+/* 80px 禁区参考线 */
+.zone { position: absolute; left: 0; width: 480px; height: 80px;
+  color: #033; font-size: 12px; display: flex; align-items: center; justify-content: center;
+  border: 1px dashed #0a3; opacity: 0; }
+.zone-top { top: 0; } .zone-bottom { bottom: 0; }
+.panel.guides .zone { opacity: .5; }
+.panel.guides .content { outline: 1px dashed #0a3; }
+
+/* 480x480 安全内容区 */
+.content { position: absolute; top: 80px; left: 0; width: 480px; height: 480px;
+  padding: 10px; overflow-y: auto; }
+.line { white-space: pre-wrap; word-break: break-word; }
+.line.tool { color: var(--green); }
+.line.err { color: #ff5555; }
+.line.think { color: #0a7; font-style: italic; }
+
+.status { position: absolute; bottom: 0; left: 0; width: 480px; height: 80px;
+  display: flex; align-items: center; padding: 0 12px; border-top: 1px solid #052; font-size: 16px; }
+
+/* 按住说话 */
+#mic { user-select: none; touch-action: none; }
+#mic.listening { background: var(--green); color: #000; border-color: var(--green); }
+#mic:disabled { opacity: .4; cursor: not-allowed; }
