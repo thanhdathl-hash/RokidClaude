@@ -18,7 +18,9 @@ if (-not (Test-Path $envFile)) {
     '# Tu dong tao. GIU BI MAT: ai co ma nay la dieu khien duoc Claude tren may ban.',
     "ROKID_TOKEN=$tok",
     '# Ten mien co dinh mien phi cua ngrok (vd: ten-ban.ngrok-free.app). De trong = moi lan chay mot dia chi moi.',
-    'NGROK_DOMAIN='
+    'NGROK_DOMAIN=',
+    '# (Tuy chon) Ma API Groq de nhan giong noi nhanh tren cloud. De trong = nhan giong noi tren may.',
+    'GROQ_API_KEY='
   ) | Set-Content -Encoding ascii $envFile
   Ok 'Đã tạo mật khẩu kết nối mới'
 }
@@ -29,6 +31,12 @@ foreach ($line in (Get-Content $envFile)) {
 if (-not $conf['ROKID_TOKEN']) { Fail "ROKID_TOKEN trống trong $envFile" }
 $env:ROKID_TOKEN = $conf['ROKID_TOKEN']
 $domain = $conf['NGROK_DOMAIN']
+if ($conf['GROQ_API_KEY']) {
+  $env:GROQ_API_KEY = $conf['GROQ_API_KEY']
+  Ok 'Nhận giọng nói: Groq (cloud, nhanh). Lỗi mạng sẽ tự chuyển về máy.'
+} else {
+  Remove-Item Env:GROQ_API_KEY -ErrorAction SilentlyContinue
+}
 
 Set-ClaudeEnv
 Set-RelayEnv
