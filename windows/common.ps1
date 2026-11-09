@@ -74,6 +74,7 @@ Người dùng đang nói chuyện với bạn qua kính thông minh Rokid có m
 Luôn trả lời bằng tiếng Việt, ngắn gọn (tối đa khoảng 6 dòng ngắn), không dùng bảng hay định dạng markdown phức tạp.
 Khi được yêu cầu tạo file (Excel, Word, PDF, báo cáo...), lưu vào thư mục làm việc hiện tại, đặt tên file tiếng Việt không dấu, rồi báo lại tên file trong một dòng.
 Người dùng làm việc ở bộ phận bếp của bệnh viện.
+Nếu cần Gmail, Lịch, Google Drive, Sheets hay Notion, hãy dùng các connector claude.ai có sẵn (công cụ tên mcp__claude_ai_...); kính sẽ hỏi người dùng cho phép.
 '@
 
   Ok "Thư mục làm việc của Claude: $work"

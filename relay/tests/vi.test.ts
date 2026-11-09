@@ -41,3 +41,12 @@ describe('Vietnamese speech mode (ROKID_SPEECH_LANG=vi)', () => {
     expect(a.slice(-2)).toEqual(['--append-system-prompt', 'Trả lời tiếng Việt']);
   });
 });
+
+import { summarize, memoryKey } from '../src/permission';
+describe('connector (MCP) permission summary', () => {
+  it('shows app + action and remembers per tool', () => {
+    const r = summarize('mcp__claude_ai_Gmail__search_threads', { query: 'x' }, 'en');
+    expect(r.summary).toBe('Gmail: search_threads');
+    expect(memoryKey('mcp__claude_ai_Gmail__search_threads', r.command)).toBe('mcp__claude_ai_Gmail__search_threads');
+  });
+});

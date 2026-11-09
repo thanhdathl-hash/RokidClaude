@@ -21,6 +21,12 @@ export function decide(key: string, allowedSet: Set<string>): 'allow' | 'ask' {
 
 /** 从工具名+输入提炼给用户看的一句人话 + 用于记忆键的命令串。动词按 lang。 */
 export function summarize(tool: string, input: Record<string, unknown>, lang: Lang = 'zh'): { summary: string; command: string } {
+  // claude.ai connectors / MCP tools, e.g. mcp__claude_ai_Gmail__search_threads -> "Gmail: search_threads".
+  if (tool.startsWith('mcp__')) {
+    const [, server = '', ...rest] = tool.split('__');
+    const app = server.replace(/^claude_ai_/, '').replace(/_/g, ' ');
+    return { summary: `${app}: ${rest.join('__') || tool}`, command: tool };
+  }
   const cmd =
     (typeof input.command === 'string' && input.command) ||
     (typeof input.file_path === 'string' && input.file_path) ||

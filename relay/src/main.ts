@@ -29,7 +29,9 @@ writeFileSync(settingsPath, JSON.stringify({
   permissions: { allow: ['WebSearch', 'WebFetch'] },
   hooks: {
     PreToolUse: [{
-      matcher: 'Bash|Write|Edit|MultiEdit|NotebookEdit',
+      // mcp__.* = claude.ai connectors (Gmail, Drive, Calendar, Notion...): ask on the glasses,
+      // since headless `claude -p` would otherwise silently deny them.
+      matcher: 'Bash|Write|Edit|MultiEdit|NotebookEdit|mcp__.*',
       hooks: [{ type: 'command', command: hookCommand }],
     }],
   },
