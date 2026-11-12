@@ -61,7 +61,7 @@ private val ZH = Strings(
 private val EN = Strings(
     connecting = "Connecting…", connected = "Connected", disconnected = "Disconnected, reconnecting…", closed = "Closed",
     ready = "Ready", recordingDot = "● Recording…", recordingStatus = "🎤 Recording…",
-    hint = "tap talk/stop · double-tap blank · swipe scroll · say \"new session\" to reset · say \"network\" for WiFi · say \"exit\" to quit", choiceHint = "swipe to choose · tap to confirm",
+    hint = "tap talk/stop · double-tap blank (again = exit) · swipe scroll · say \"new session\" to reset · say \"network\" for WiFi · say \"exit\" to quit", choiceHint = "swipe to choose · tap to confirm",
     modelUnknown = "no model", sessionLabel = "session", confirm = "Confirm", selectModel = "Select model",
     noSpeech = "(nothing heard)", newSessionMsg = "🆕 New session", exitMsg = "👋 Exit",
     submitting = "Submitting…", transcribing = "Transcribing…", stopped = "⏹ Stopped", micUnauthorized = "Mic not authorized",

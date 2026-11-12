@@ -129,8 +129,10 @@ class MainActivity : ComponentActivity() {
     override fun onKeyUp(keyCode: Int, event: android.view.KeyEvent): Boolean {
         if (hud.blanked) {
             // 灭屏态:吞掉所有事件;仅"真手势"(单击/双击/滑动)才唤醒,避免预触发漏到 onTap
-            if (Gestures.map(keyCode, android.view.KeyEvent.ACTION_UP) != null ||
-                keyCode == android.view.KeyEvent.KEYCODE_BACK) setBlanked(false)
+            // Double-tap while blanked = exit the app (so there is always a gesture way out,
+            // even when voice "exit" is not recognised). Tap / swipe = wake the screen.
+            if (keyCode == android.view.KeyEvent.KEYCODE_BACK) { hud.status = s.exitMsg; finish(); return true }
+            if (Gestures.map(keyCode, android.view.KeyEvent.ACTION_UP) != null) setBlanked(false)
             return true
         }
         if (SystemClock.uptimeMillis() - wokeAt < 700) return true   // 唤醒余波:吞掉同一手势的后续事件
