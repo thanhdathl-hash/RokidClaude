@@ -13,8 +13,8 @@ android {
         applicationId = "com.rokid.relayhud"
         minSdk = 31
         targetSdk = 34
-        versionCode = 3
-        versionName = "0.3-vi"
+        versionCode = 4
+        versionName = "0.4-vi"
     }
     buildTypes {
         getByName("release") { isMinifyEnabled = false }

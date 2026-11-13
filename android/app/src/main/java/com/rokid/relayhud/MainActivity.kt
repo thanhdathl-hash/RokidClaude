@@ -145,7 +145,14 @@ class MainActivity : ComponentActivity() {
                 else -> {}
             }
         }
-        if (keyCode == android.view.KeyEvent.KEYCODE_BACK) { setBlanked(true); return true }  // 双击=主动灭屏
+        // Double-tap = ask to exit; a second double-tap within 3 s exits. (Previously it only
+        // blanked the HUD, which left no gesture way out while connected.)
+        if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
+            val now = SystemClock.uptimeMillis()
+            if (now - lastBackAt < 3000) { hud.status = s.exitMsg; finish() }
+            else { lastBackAt = now; hud.status = s.exitConfirm }
+            return true
+        }
         // 选择模式优先截胡:前/后滑移动高亮,单击确认。
         val p = hud.choice
         val cs = choiceState
@@ -220,6 +227,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private var wokeAt = 0L
+    private var lastBackAt = 0L
 
     private fun setBlanked(b: Boolean) {
         hud.blanked = b
