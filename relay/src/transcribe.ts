@@ -23,7 +23,14 @@ export function whisperArgs(wavPath: string, modelPath: string, lang: Lang): str
   // Windows: whisper-cli reads argv in the ANSI code page, so a non-ASCII prompt (Vietnamese,
   // Chinese) would arrive garbled and hurt recognition -> skip the prompt there.
   const nonAscii = t.whisperPrompt ? /[^\x00-\x7F]/.test(t.whisperPrompt) : false;
-  if (t.whisperPrompt && !(process.platform === 'win32' && nonAscii)) args.push('--prompt', t.whisperPrompt);
+  // Vocabulary hint (project / supplier names) so whisper spells them right. WHISPER_HINT
+  // should be ASCII so it also survives Windows argv; it replaces a non-ASCII prompt there.
+  const hint = (process.env.WHISPER_HINT ?? '').trim();
+  if (t.whisperPrompt && !(process.platform === 'win32' && nonAscii)) {
+    args.push('--prompt', hint ? `${t.whisperPrompt} ${hint}` : t.whisperPrompt);
+  } else if (hint && !/[^\x00-\x7F]/.test(hint)) {
+    args.push('--prompt', hint);
+  }
   return args;
 }
 
@@ -75,6 +82,8 @@ export async function transcribeGroq(wavPath: string, lang: Lang, env = process.
     form.append('file', new Blob([readFileSync(wavPath)], { type: 'audio/wav' }), basename(wavPath));
     form.append('model', env.GROQ_MODEL || 'whisper-large-v3-turbo');
     form.append('language', tr(lang).whisperLang);
+    const prompt = [tr(lang).whisperPrompt, env.WHISPER_HINT].filter(Boolean).join(' ').trim();
+    if (prompt) form.append('prompt', prompt.slice(0, 800));
     form.append('response_format', 'json');
     const res = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
       method: 'POST',

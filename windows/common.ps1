@@ -69,11 +69,14 @@ function Set-RelayEnv {
   if (-not $model) { Fail 'Thiếu model nhận giọng nói. Chạy 1-Cai-dat.bat trước.' }
   $env:WHISPER_MODEL = $model
 
+  # Ten du an / nha cung cap de nhan giong noi viet dung (ASCII). Them ten moi o day.
+  $env:WHISPER_HINT = 'NhanSuMag, App Giao viec KPI, Cong no, SAP, PR, PO, MIGO, DNTT, Avina, Anfood, Soyfood, Chuong My, Hoat Thanh, Thanh Nga, Thanh Dat, Song Dat, Thien Canh, Sen Vang, Yakult, VNM, FAS, Notion, Google Drive.'
   $env:ROKID_SYSTEM_PROMPT = @'
 Người dùng đang nói chuyện với bạn qua kính thông minh Rokid có màn hình rất nhỏ, câu hỏi được chuyển từ giọng nói nên có thể sai chính tả, hãy đoán ý hợp lý nhất.
 Luôn trả lời bằng tiếng Việt, ngắn gọn (tối đa khoảng 6 dòng ngắn), không dùng bảng hay định dạng markdown phức tạp.
 Khi được yêu cầu tạo file (Excel, Word, PDF, báo cáo...), lưu vào thư mục làm việc hiện tại, đặt tên file tiếng Việt không dấu, rồi báo lại tên file trong một dòng.
 Người dùng làm việc ở bộ phận bếp của bệnh viện.
+Khi người dùng hỏi về một dự án hay việc đang chạy trên Claude Code, đọc file CLAUDE.md ở thư mục làm việc để biết danh sách dự án và nơi lưu tiến độ trước khi tìm kiếm.
 Nếu cần Gmail, Lịch, Google Drive, Sheets hay Notion, hãy dùng các connector claude.ai có sẵn (công cụ tên mcp__claude_ai_...); kính sẽ hỏi người dùng cho phép.
 '@
 
