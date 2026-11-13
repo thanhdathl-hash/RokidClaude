@@ -62,6 +62,9 @@ const VI_GLASSES_CMDS: Record<string, string> = {
   'phiên mới': 'new session', 'cuộc trò chuyện mới': 'new session', 'trò chuyện mới': 'new session',
   'làm mới': 'new session', 'bắt đầu lại': 'new session', 'hội thoại mới': 'new session',
   'thoát': 'exit', 'thoát ra': 'exit', 'đóng ứng dụng': 'exit', 'tắt ứng dụng': 'exit',
+  'thoát app': 'exit', 'thoát ứng dụng': 'exit', 'tắt app': 'exit', 'đóng app': 'exit',
+  'thoát đi': 'exit', 'thoát nhé': 'exit', 'đóng': 'exit', 'tắt': 'exit', 'kết thúc': 'exit',
+  'thoat': 'exit', 'thoắt': 'exit', 'thoạt': 'exit', 'thót': 'exit', 'exit': 'exit', 'quit': 'exit',
   'mạng': 'wifi', 'wifi': 'wifi', 'wi-fi': 'wifi', 'mở wifi': 'wifi', 'cài đặt wifi': 'wifi',
 };
 
